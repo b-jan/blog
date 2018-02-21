@@ -41,6 +41,8 @@ export default Index;
 
 Now enter ```npm run dev``` into your terminal and go to http://localhost:3000
 
+![Hello World Result](assets/1.png?raw=true "Hello World Result")
+
 ```
 const About = ({ title = 'Hello from the About page' }) => (
   <div>
@@ -171,8 +173,12 @@ export default withMaterialUI(Index);
 
 ```
 
+![First Material UI Result](assets/2.png?raw=true "First Material UI Result")
+
+
 Populate our application with data using Async/Await
 
+![API Data Result](assets/3.png?raw=true "Theodo Github API Result")
 
 
 
