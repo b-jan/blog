@@ -1,6 +1,6 @@
 Framework minimalist to build server rendered ReactJS Application with Next.js
 
-Next js photo
+![3 logos](assets/logos.png?raw=true "Technologies we're gonna use")
 
 Generate your package.json with ```npm init```
 
