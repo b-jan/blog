@@ -1,5 +1,7 @@
 # Upgrade your React App with Server-Side Rendering: Next.js
 
+![Next.js](assets/ssr-next.jpg?raw=true "React SSR with Next.js")
+
 ## Why SSR (Server-Side Rendering)?
 
 This is not the point of this article, but here is a quick sum-up of what SSR can bring to your application.
@@ -9,7 +11,7 @@ This is not the point of this article, but here is a quick sum-up of what SSR ca
 - Avoid blank page flicker before rendering
 
 If you want to know more about it, please read this great article:
-[The Benefits of Server Side Rendering Over Client Side Rendering](https://medium.com/walmartlabs/the-benefits-of-server-side-rendering-over-client-side-rendering-5d07ff2cefe8)
+[Benefits of Server Side Over Client Side Rendering](https://medium.com/walmartlabs/the-benefits-of-server-side-rendering-over-client-side-rendering-5d07ff2cefe8)
 
 Let's focus on the how rather than on the why here.
 
