@@ -1,5 +1,12 @@
 ![3 logos](assets/logos.png?raw=true "Technologies we're gonna use")
 
+For the aim of this tutorial, install other dependencies (...) :
+
+```
+npm install --save dotenv express material-ui react-tap-event-plugin
+```
+
+
 
 
 Implement a custom material UI theme on the server
