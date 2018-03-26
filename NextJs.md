@@ -2,6 +2,7 @@
 
 ![Next.js](assets/ssr-next.jpg?raw=true "React SSR with Next.js")
 
+
 ## Why SSR (Server-Side Rendering)?
 
 This is not the point of this article, but here is a quick sum-up of what SSR can bring to your application:
@@ -43,12 +44,12 @@ Create React App is ...
 It is also possible to make SSR work on top of Create React App, we won't go through that painful work
 twice in this article. Still, if you're interested in it, this great article is
 
+
 ## Next.js helps you building server rendered React.js Application
 
+![Easy Next](assets/relax.jpg?raw=true "Easy SSR with Next.js")
 
 ### What is Next.js?
-
-![Easy Next](assets/relax.jpg?raw=true "Easy SSR with Next.js")
 
 Next.js is a minimalistic framework for server-rendered React applications with:
 
@@ -117,6 +118,13 @@ You're ready to go! You're already doing SSR.
 
 We are going to see a trick here. If you start from scratch and you know that you want to make an SSR React app,
 you know that Next is the best choice. But what if your React app is already 6 months old?
+
+About how to migrate, you can create a single Next.js page with your React Router components and then gradually
+migrate each route to a Next.js one and remove the React Router route.
+
+First make it work as a SPA, then progressively break up into pages.
+
+https://blog.eleven-labs.com/en/migrate-a-react-client-side-application-to-server-side-with-nextjs/
 
 https://gist.github.com/jaredpalmer/a73bc00cac8926ff0ad5281879b1eb90
 
