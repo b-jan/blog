@@ -44,6 +44,8 @@ Create React App is ...
 It is also possible to make SSR work on top of Create React App, we won't go through that painful work
 twice in this article. Still, if you're interested in it, this great article is
 
+https://medium.com/bucharestjs/upgrading-a-create-react-app-project-to-a-ssr-code-splitting-setup-9da57df2040a
+
 
 ## Next.js helps you building server rendered React.js Application
 
