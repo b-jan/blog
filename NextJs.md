@@ -1,6 +1,8 @@
-# Upgrade your React App with Server-Side Rendering: Next.js
+# Next.js: Use Server-Side Rendering in your React App 
 
 ![Next.js](assets/ssr-next.jpg?raw=true "React SSR with Next.js")
+
+intro plan
 
 
 ## Why SSR (Server-Side Rendering)?
