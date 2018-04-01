@@ -10,7 +10,7 @@ While your scripts are loading, your visitor sees nothing, a blank page!
 Looking for how to eliminate this crappy blank page, I discovered Next.js: this is the best framework for making server-side rendering React applications.
 
 
-## Why SSR (Server-Side Rendering)?
+### Why SSR (Server-Side Rendering)?
 
 This is not the point of this article, but here is a quick sum-up of what SSR can bring to your application:
 
@@ -23,11 +23,27 @@ If you want to know more about it, please read this great article:
 
 Let's focus on the how rather than the why here.
 
-## Look how painful manual SSR is...
+
+### What's the plan?
+
+Facebook has created a node module create-react-app to generate a boilerplate version of a React application.
+Many React applications are close to its settings. That's why I chose it as a code base for this article.
+
+This article is split in 3 short parts:
+
+- How to upgrade manually your React app to SSR
+- How to start with Next.js from scratch
+- How to bring Next.js to your existing React app
+
+I won't go through all the steps, but I will bring your attention on the main points of interesting.
+I also provide a repository for each of the 3 strategies.
+
+
+## 1) Look how painful manual SSR is...
 
 ![Manually](assets/injury.jpg?raw=true "React SSR manually")
 
-In that part, we will see how to implement SSR on an existing React app. Let's take this starter code with:
+In that part, we will see how to implement SSR on an existing React app. Let's take the create-react-app starter code with:
 
 - `package.json` for dependencies
 - Webpack and Babel configuration
@@ -44,14 +60,18 @@ Install the dependencies with `npm install` and start the development server wit
 
 Browse to http://localhost:3000 to view the app.
 
-## And still painful with Create React App
-
-Create React App is ...
 
 It is also possible to make SSR work on top of Create React App, we won't go through that painful work
 twice in this article. Still, if you're interested in it, this great article is
 
 https://medium.com/bucharestjs/upgrading-a-create-react-app-project-to-a-ssr-code-splitting-setup-9da57df2040a
+
+### What we miss now
+
+
+
+
+Guess what: Next.js can bring you all these features!
 
 
 ## Next.js helps you building server rendered React.js Application
