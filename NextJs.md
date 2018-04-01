@@ -183,6 +183,7 @@ Next.js is a minimalistic framework for server-rendered React applications with:
 
 - a very simple page based routing
 - Webpack hot reloading
+- automatic transpilation (babel)
 - deployment facilities
 - automatic code splitting (loads page faster)
 - built in css support
@@ -219,25 +220,14 @@ No need to import any library at the top of our index.js file, Next.js already k
 
 Now enter ```npm run dev``` into your terminal and go to http://localhost:3000: Tadaaaaa!
 
-![Hello World Result](assets/1.png?raw=true "Hello World Result")
+![Hello World Result](assets/hello-world.jpg?raw=true "Hello World Result")
 
-Repeat the same operation to create a new page 'About':
-
-```
-const About = ({ title = 'Hello from the About page' }) => (
-  <div>
-    <h1>{title}</h1>
-  </div>
-);
-
-export default About;
-```
-
-Navigate to http://localhost:3000/about:
-
-![Hello World Result](assets/1.png?raw=true "Hello World Result")
+Repeat the same operation inside your pages/ folder to create a new page.
+The name you give to the file will directly be matched by the url you will access it.
 
 You're ready to go! You're already doing SSR.
+
+check [NextGram project](https://github.com/now-examples/nextgram) to see an app that takes advantage of the routing capabilities.
 
 
 ## How to use the power of Next.js in my existing React.js application?
