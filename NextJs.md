@@ -52,6 +52,9 @@ In that part, we will see how to implement SSR on an existing React app. Let's t
 
 If you don't have any existing React app, clone this repository I made:
 
+![CSR](assets/cra-csr.gif?raw=true "Client-side rendering on a create-react-app")
+
+
 Install the dependencies with `npm install` and start the development server with `npm run start`.
 
 Browse to http://localhost:3000 to view the app.
@@ -60,10 +63,14 @@ Browse to http://localhost:3000 to view the app.
 It is also possible to make SSR work on top of Create React App, we won't go through that painful work
 twice in this article. Still, if you're interested in it, this great article is
 
-https://medium.com/bucharestjs/upgrading-a-create-react-app-project-to-a-ssr-code-splitting-setup-9da57df2040a
+
+![SSR](assets/cra-ssr.gif?raw=true "Server-side rendering on a create-react-app")
+
+
 
 ### What we miss now
 
+https://medium.com/bucharestjs/upgrading-a-create-react-app-project-to-a-ssr-code-splitting-setup-9da57df2040a
 
 
 
