@@ -39,29 +39,46 @@ I won't go through all the steps, but I will bring your attention on the main po
 I also provide a repository for each of the 3 strategies.
 
 
-## 1) Look how painful manual SSR is...
+## 1) Look how twisted manual SSR is...
 
 ![Manually](assets/injury.jpg?raw=true "React SSR manually")
 
-In that part, we will see how to implement SSR on an existing React app. Let's take the create-react-app starter code with:
+In that part, we will see how to implement SSR manually on an existing React app. Let's take the [create-react-app] starter code:
 
 - `package.json` for dependencies
-- Webpack and Babel configuration
-- `index.html` - the HTML for the app
-- `index.js` - loads React and renders the Hello component
+- Webpack configuration included
+- `App.js` - loads React and renders the Hello component
+- `index.js` - putting all together into a root component
 
-If you don't have any existing React app, clone this repository I made:
+I just added to the code base a simple function `isClientOrServer`:
+
+```
+const isClientOrServer = () => {
+  return (typeof window !== 'undefined' && window.document) ? 'client' : 'server';
+};
+```
+
+so that we display on the page what is rendering the application.
+
+If you want to test it by yourself:
+
+- clone [this repository](https://github.com/b-jan/manual-react-ssr) I made.
+- checkout the initial commit
+- install the dependencies with `yarn`
+- launch the dev server with `yarn start`
+- browse to http://localhost:3000 to view the app.
+
+I am now simulating a 'good 3G network' in Chrome so that we really understand what is going on.
+An here is the result:
 
 ![CSR](assets/cra-csr.gif?raw=true "Client-side rendering on a create-react-app")
 
-
-Install the dependencies with `npm install` and start the development server with `npm run start`.
-
-Browse to http://localhost:3000 to view the app.
+Now we will turn that flickering into a server rendering!
 
 
-It is also possible to make SSR work on top of Create React App, we won't go through that painful work
-twice in this article. Still, if you're interested in it, this great article is
+
+
+Launch And here is the result:
 
 
 ![SSR](assets/cra-ssr.gif?raw=true "Server-side rendering on a create-react-app")
@@ -70,11 +87,17 @@ twice in this article. Still, if you're interested in it, this great article is
 
 ### What we miss now
 
+It is possible to make SSR work perfectly on top of create-react-app,
+we won't go through all the painful work in this article.
+Still, if you're interested in it,
+[this great article](https://medium.com/@cereallarceny/server-side-rendering-with-create-react-app-fiber-react-router-v4-helmet-redux-and-thunk-275cb25ca972)
+is giving detailed explanations.
+
+
+we still miss code splitting
+
 https://medium.com/bucharestjs/upgrading-a-create-react-app-project-to-a-ssr-code-splitting-setup-9da57df2040a
 
-
-
-https://medium.com/@cereallarceny/server-side-rendering-with-create-react-app-fiber-react-router-v4-helmet-redux-and-thunk-275cb25ca972
 
 
 
