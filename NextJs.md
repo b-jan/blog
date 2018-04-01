@@ -2,12 +2,12 @@
 
 ![Next.js](assets/ssr-next.jpg?raw=true "React SSR with Next.js")
 
-The simplest setting for your React application is client-side rendering. You are usually completely running ReactJS on the browser.
+You are usually completely running ReactJS on the browser. For sure, the simplest setting for your React application is client-side rendering.
 The initial html rendered by the server is a placeholder `<div id="root"></div>` and the entire UI is rendered in the browser once all your scripts load.
 
-While your scripts are loading, your visitor sees nothing, a blank page!
+The problem is that, in the meantime, your visitor sees... nothing, a blank page!
 
-Looking for how to eliminate this crappy blank page, I discovered Next.js: this is the best framework for making server-side rendering React applications.
+Looking for how to get rid of this crappy blank page for a personal project, I discovered Next.js: the current best framework for making server-side rendering React applications.
 
 
 ### Why SSR (Server-Side Rendering)?
@@ -26,7 +26,7 @@ Let's focus on the how rather than the why here.
 
 ### What's the plan?
 
-Facebook has created a node module create-react-app to generate a boilerplate version of a React application.
+Facebook has created a node module [create-react-app](https://github.com/facebook/create-react-app) to generate a boilerplate version of a React application.
 Many React applications are close to its settings. That's why I chose it as a code base for this article.
 
 This article is split in 3 short parts:
