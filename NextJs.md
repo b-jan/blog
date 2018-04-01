@@ -142,7 +142,7 @@ To test it by yourself:
 - checkout last changes on master branch
 - install the dependencies with `yarn`
 - build the application with `yarn build`
-- declare babel environment in your shell: `export BABEL_ENV=development`
+- declare babel environment in your terminal: `export BABEL_ENV=development`
 - launch your node server with `node server/bootstrap.js`
 - browse to http://localhost:3001 to view the app
 
@@ -195,20 +195,18 @@ First, generate your package.json with `npm init` and install Next.js with `npm 
 Then, add a script to your package.json like this:
 
 ```
-{
   "scripts": {
     "dev": "next",
     "build": "next build",
     "start": "next start"
   }
-}
 ```
 
 Create a pages/ folder. Every .js file becomes a route that gets automatically processed and rendered.
-No need to import any library at the top of our index.js file, Next.js already knows that we are using React.
+Add a index.js file in that pages/ folder:
 
 ```
-const Index = ({ title = 'Hello from our Theodo Next.js tutorial' }) => (
+const Index = ({ title = 'Hello from Next.js' }) => (
   <div>
     <h1>{title}</h1>
   </div>
@@ -216,6 +214,8 @@ const Index = ({ title = 'Hello from our Theodo Next.js tutorial' }) => (
 
 export default Index;
 ```
+
+No need to import any library at the top of our index.js file, Next.js already knows that we are using React.
 
 Now enter ```npm run dev``` into your terminal and go to http://localhost:3000: Tadaaaaa!
 
