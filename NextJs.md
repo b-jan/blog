@@ -16,11 +16,11 @@ This is not the point of this article, but here is a quick sum-up of what SSR ca
 If you want to know more about it, please read this great article:
 [Benefits of Server Side Over Client Side Rendering](https://medium.com/walmartlabs/the-benefits-of-server-side-rendering-over-client-side-rendering-5d07ff2cefe8).
 
-Let's focus on the how rather than on the why here.
+Let's focus on the how rather than the why here.
 
 ## Look how painful manual SSR is...
 
-![Manually](assets/painful.jpg?raw=true "React SSR manually")
+![Manually](assets/injury.jpg?raw=true "React SSR manually")
 
 In that part, we will see how to implement SSR on an existing React app. Let's take this starter code with:
 
@@ -51,7 +51,7 @@ https://medium.com/bucharestjs/upgrading-a-create-react-app-project-to-a-ssr-cod
 
 ## Next.js helps you building server rendered React.js Application
 
-![Easy Next](assets/relax.jpg?raw=true "Easy SSR with Next.js")
+![Easy Next](assets/cucumber.jpg?raw=true "Easy SSR with Next.js")
 
 ### What is Next.js?
 
@@ -118,7 +118,7 @@ You're ready to go! You're already doing SSR.
 
 ## How to use the power of Next.js in my existing React.js application?
 
-![Trick](assets/cave.jpg?raw=true "Next.js in existing app")
+![Trick](assets/tunnel.jpg?raw=true "Next.js in existing app")
 
 We are going to see a trick here. If you start from scratch and you know that you want to make an SSR React app,
 you know that Next is the best choice. But what if your React app is already 6 months old?
