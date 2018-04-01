@@ -82,7 +82,7 @@ I won't through all the code but I will describe the main steps.
 
 We first need a server, add Express to our dependencies with `yarn add express`.
 
-Webpack only loads the source folder, we can thus create a new folder named `server/` next to it.
+Webpack only loads the src/ folder, we can thus create a new folder named server/ next to it.
 Inside, create a `index.js` file where we use express and a server renderer.
 
 ```
@@ -170,7 +170,7 @@ Our example is a proof of concept very limited. We would like to see more featur
 It is possible to make SSR work perfectly on top of create-react-app, we won't go through all the painful work in this article.
 Still, if you're interested in it, I attached just above some great articles giving detailed explanations.
 
-But seriously... Next.js can bring you all these features!
+Seriously... Next.js can bring you all these features!
 
 
 ## Next.js helps you building server rendered React.js Application
