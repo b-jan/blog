@@ -204,12 +204,16 @@ Then, add a script to your package.json like this:
 ```
 
 Create a pages/ folder. Every .js file becomes a route that gets automatically processed and rendered.
-Add a index.js file in that pages/ folder:
+Add a index.js file in that pages/ folder (with the execution of our `isClientOrServer` function):
 
 ```
 const Index = ({ title = 'Hello from Next.js' }) => (
   <div>
     <h1>{title}</h1>
+    <p className="App-intro">
+      Is my application rendered by server or client?
+    </p>
+    <h2><code>{isClientOrServer()}</code></h2>
   </div>
 );
 
@@ -220,14 +224,14 @@ No need to import any library at the top of our index.js file, Next.js already k
 
 Now enter ```npm run dev``` into your terminal and go to http://localhost:3000: Tadaaaaa!
 
-![Hello World Result](assets/hello-world.jpg?raw=true "Hello World Result")
+![Next Hello World](assets/next.gif?raw=true "Next.js Hello World Result")
 
 Repeat the same operation inside your pages/ folder to create a new page.
-The name you give to the file will directly be matched by the url you will access it.
+The name you give to the file will directly be matched by the url to access it.
 
 You're ready to go! You're already doing SSR.
 
-check [NextGram project](https://github.com/now-examples/nextgram) to see an app that takes advantage of the routing capabilities.
+Check [NextGram project](https://github.com/now-examples/nextgram) to see an app that takes advantage of the routing capabilities.
 
 
 ## How to use the power of Next.js in my existing React.js application?
