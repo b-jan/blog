@@ -2,7 +2,12 @@
 
 ![Next.js](assets/ssr-next.jpg?raw=true "React SSR with Next.js")
 
-intro plan
+The simplest setting for your React application is client-side rendering. You are usually completely running ReactJS on the browser.
+The initial html rendered by the server is a placeholder `<div id="root"></div>` and the entire UI is rendered in the browser once all your scripts load.
+
+While your scripts are loading, your visitor sees nothing, a blank page!
+
+Looking for how to eliminate this crappy blank page, I discovered Next.js: this is the best framework for making server-side rendering React applications.
 
 
 ## Why SSR (Server-Side Rendering)?
@@ -133,9 +138,28 @@ https://blog.eleven-labs.com/en/migrate-a-react-client-side-application-to-serve
 https://gist.github.com/jaredpalmer/a73bc00cac8926ff0ad5281879b1eb90
 
 
-## Conclusion
+## Improving again
+
 
 If you want to know more, visit : https://learnnextjs.com/basics/getting-started
 Vue.js has its own Next.js named Nuxt.js, visit : https://nuxtjs.org/guide
 Caching
 Better performance for end users, Better customer engagement
+
+
+
+### Do both
+
+Here, the initial render is on the server. Hence, the html received by the browser has the UI as it should be.
+Once the scripts are loaded, the virtual DOM is re-rendered once again to set up your components' event handlers.
+
+Over here, you need to make sure that you re-render the exact same virtual DOM (root ReactJS component) with
+the same props that you used to render on the server. Otherwise, ReactJS will complain that the server-side and
+client-side virtual DOMs don't match.
+
+
+### Caching
+
+
+### Vue.js and Nuxt
+
