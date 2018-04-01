@@ -52,10 +52,6 @@ In that part, we will see how to implement SSR on an existing React app. Let's t
 
 If you don't have any existing React app, clone this repository I made:
 
-```
-git clone ...
-```
-
 Install the dependencies with `npm install` and start the development server with `npm run start`.
 
 Browse to http://localhost:3000 to view the app.
@@ -67,6 +63,11 @@ twice in this article. Still, if you're interested in it, this great article is
 https://medium.com/bucharestjs/upgrading-a-create-react-app-project-to-a-ssr-code-splitting-setup-9da57df2040a
 
 ### What we miss now
+
+
+
+
+https://medium.com/@cereallarceny/server-side-rendering-with-create-react-app-fiber-react-router-v4-helmet-redux-and-thunk-275cb25ca972
 
 
 
@@ -177,6 +178,10 @@ Over here, you need to make sure that you re-render the exact same virtual DOM (
 the same props that you used to render on the server. Otherwise, ReactJS will complain that the server-side and
 client-side virtual DOMs don't match.
 
+
+### Pre-rendering
+
+https://medium.com/@dtinth/prerendering-a-create-react-app-app-6e8571d7d662
 
 ### Caching
 
