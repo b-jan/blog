@@ -50,6 +50,8 @@ In that part, we will see how to implement SSR manually on an existing React app
 - `App.js` - loads React and renders the Hello component
 - `index.js` - putting all together into a root component
 
+### Checking rendering type
+
 I just added to the code base a simple function `isClientOrServer`:
 
 ```
@@ -60,49 +62,115 @@ const isClientOrServer = () => {
 
 so that we display on the page what is rendering the application.
 
-If you want to test it by yourself:
+To test it by yourself:
 
 - clone [this repository](https://github.com/b-jan/manual-react-ssr) I made.
 - checkout the initial commit
 - install the dependencies with `yarn`
 - launch the dev server with `yarn start`
-- browse to http://localhost:3000 to view the app.
+- browse to http://localhost:3000 to view the app
 
 I am now simulating a 'good 3G network' in Chrome so that we really understand what is going on.
 An here is the result:
 
 ![CSR](assets/cra-csr.gif?raw=true "Client-side rendering on a create-react-app")
 
-Now we will turn that flickering into a server rendering!
+### Implementing SSR
 
+Let's remove that crappy flickering with server-side rendering!
+I won't through all the code but I will describe the main steps.
 
+We first need a server, add Express to our dependencies with `yarn add express`.
 
+Webpack only loads the source folder, we can thus create a new folder named `server/` next to it.
+Inside, create a `index.js` file where we use express and a server renderer.
 
-Launch And here is the result:
+```
+[...]
 
+// we use port 3001 here
+const PORT = 3001;
+const path = require('path');
+
+// initialize the application and create the routes
+const app = express();
+const router = express.Router();
+
+// root (/) should always serve our server rendered page
+router.use('^/$', serverRenderer);
+
+[...]
+```
+
+To render our html, we use a server renderer that is replacing the root component with the built html:
+
+```
+[...]
+
+// index.html file created by create-react-app build tool
+const filePath = path.resolve(__dirname, '..', '..', 'build', 'index.html');
+
+fs.readFile(filePath, 'utf8', (err, htmlData) => {
+  // render the app as a string
+  const html = ReactDOMServer.renderToString(<App />);
+
+    // inject the rendered app into our html
+    return res.send(
+      htmlData.replace(
+        '<div id="root"></div>',
+        `<div id="root">${html}</div>`
+      )
+    );
+  }
+```
+
+We finally need an entry point that will tell Node how to interpret our React JSX code. We achieve this with Babel.
+
+```
+[...]
+
+require('babel-register')({
+  ignore: [ /(node_modules)/ ],
+  presets: ['es2015', 'react-app']
+});
+
+[...]
+```
+
+To test it by yourself:
+
+- checkout last changes on master branch
+- install the dependencies with `yarn`
+- build the application with `yarn build`
+- declare babel environment in your shell: `export BABEL_ENV=development`
+- launch your node server with `node server/bootstrap.js`
+- browse to http://localhost:3001 to view the app
+
+Still simulating the 'good 3G network' in Chrome, here is the result:
 
 ![SSR](assets/cra-ssr.gif?raw=true "Server-side rendering on a create-react-app")
 
+Do not be mistaken, the page is rendered by server. But as soon as the javascript is fully loaded,
+window.document is available and the `isClientOrServer()` function returns `client`.
 
+We proved that we can do SSR, but what the heck with that React logo?
 
-### What we miss now
+### We miss many features
 
-It is possible to make SSR work perfectly on top of create-react-app,
-we won't go through all the painful work in this article.
-Still, if you're interested in it,
-[this great article](https://medium.com/@cereallarceny/server-side-rendering-with-create-react-app-fiber-react-router-v4-helmet-redux-and-thunk-275cb25ca972)
-is giving detailed explanations.
+Our example is a proof of concept very limited. We would like to see more feature like:
 
+- import images in js files
+- several routes usage or route management (check [this article](https://medium.com/@benlu/ssr-with-create-react-app-v2-1b8b520681d9))
+- deal with the `</head>` and the metatags
+- code splitting (here is [an article](https://medium.com/bucharestjs/upgrading-a-create-react-app-project-to-a-ssr-code-splitting-setup-9da57df2040a
+) solving the problem)
+- manage the state of our app or use Redux (check this [great article](https://medium.com/@cereallarceny/server-side-rendering-with-create-react-app-fiber-react-router-v4-helmet-redux-and-thunk-275cb25ca972)
+)
 
-we still miss code splitting
+It is possible to make SSR work perfectly on top of create-react-app, we won't go through all the painful work in this article.
+Still, if you're interested in it, I attached just above some great articles giving detailed explanations.
 
-https://medium.com/bucharestjs/upgrading-a-create-react-app-project-to-a-ssr-code-splitting-setup-9da57df2040a
-
-
-
-
-
-Guess what: Next.js can bring you all these features!
+But seriously... Next.js can bring you all these features!
 
 
 ## Next.js helps you building server rendered React.js Application
