@@ -187,6 +187,7 @@ Next.js is a minimalistic framework for server-rendered React applications with:
 - deployment facilities
 - automatic code splitting (loads page faster)
 - built in css support
+- simple integration with Redux using next-redux-wrapper.
 
 ### Get started in 1 minute
 
@@ -238,17 +239,42 @@ Check [NextGram project](https://github.com/now-examples/nextgram) to see an app
 
 ![Trick](assets/tunnel.jpg?raw=true "Next.js in existing app")
 
-We are going to see a trick here. If you start from scratch and you know that you want to make an SSR React app,
-you know that Next is the best choice. But what if your React app is already 6 months old?
+Well, now you know that if you start from scratch and you want to make an SSR React app, Next.js  is the best choice.
+But what if your React app is already 6 months old? How to migrate your app to Next.js?
+
+Exactly like how we started with Next.js from scratch, add the Next.js dependency with `yarn add next`.
+Then replace the scripts in your `package.json`
+
+```
+  "scripts": {
+    "dev": "next dev src",
+    "start": "node server.js",
+    "build": "next build src",
+    "test": "react-scripts test --env=jsdom"
+  }
+```
+
+We need a node HTTP server and we now use the Next.js library to build and develop our application.
+We can keep `react-scripts` to run our tests.
+
+Then the strategy is to keep the same file structure we have in our client-side project and simply add a
+pages/ folder and a static/ folder (instead of assets/ folder in our case).
+
+
+
+
 
 About how to migrate, you can create a single Next.js page with your React Router components and then gradually
 migrate each route to a Next.js one and remove the React Router route.
 
 First make it work as a SPA, then progressively break up into pages.
 
-https://blog.eleven-labs.com/en/migrate-a-react-client-side-application-to-server-side-with-nextjs/
-
 https://gist.github.com/jaredpalmer/a73bc00cac8926ff0ad5281879b1eb90
+
+
+
+
+
 
 
 ## Improving again
