@@ -271,6 +271,10 @@ Then replace the scripts in your `package.json`
 We need a node HTTP server and we now use the Next.js library to build and develop our application.
 We can keep `react-scripts` to run our tests.
 
+Run your Next.js dev server with `yarn dev` and see this beautiful error:
+
+![404 page](assets/404.jpg?raw=true "Next starting error")
+
 Let's say we have a React Redux application with such a structure:
 
 ```
