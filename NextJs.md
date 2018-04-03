@@ -232,6 +232,20 @@ The name you give to the file will directly be matched by the url to access it.
 
 You're ready to go! You're already doing SSR.
 
+### Use create-next-app
+
+You can stop using create-react-app, and start using [create-next-app](https://github.com/segmentio/create-next-app):
+
+```
+npm install -g create-next-app
+
+create-next-app my-app
+cd my-app/
+npm run dev
+```
+
+This is all you need to do to create a React app with server-side rendering thanks to Next.js.
+
 Check [NextGram project](https://github.com/now-examples/nextgram) to see an app that takes advantage of the routing capabilities.
 
 
@@ -239,7 +253,7 @@ Check [NextGram project](https://github.com/now-examples/nextgram) to see an app
 
 ![Trick](assets/tunnel.jpg?raw=true "Next.js in existing app")
 
-Well, now you know that if you start from scratch and you want to make an SSR React app, Next.js  is the best choice.
+Well, now you know that if you start from scratch and you want to make a SSR React app, Next.js is the best choice.
 But what if your React app is already 6 months old? How to migrate your app to Next.js?
 
 Exactly like how we started with Next.js from scratch, add the Next.js dependency with `yarn add next`.
@@ -257,12 +271,37 @@ Then replace the scripts in your `package.json`
 We need a node HTTP server and we now use the Next.js library to build and develop our application.
 We can keep `react-scripts` to run our tests.
 
-Then the strategy is to keep the same file structure we have in our client-side project and simply add a
+Let's say we have a React Redux application with such a structure:
+
+```
+src/
+  actions/
+  assets/
+    css/
+    font/
+    img/
+    favicon.ico
+    index.html
+  components/
+    Header.component.js
+    Homepage.component.js
+    Footer.component.js
+  containers/
+    App.container.js
+    Header.container.js
+    Footer.container.js
+  reducers/
+  store/
+  translations/
+  index.js
+  routes.js
+package.json
+README.md
+yarn.lock
+```
+
+The strategy is to keep the same file structure we have in our client-side project and simply add a
 pages/ folder and a static/ folder (instead of assets/ folder in our case).
-
-
-
-
 
 About how to migrate, you can create a single Next.js page with your React Router components and then gradually
 migrate each route to a Next.js one and remove the React Router route.
