@@ -2,8 +2,10 @@
 
 ![Next.js](assets/ssr-next.jpg?raw=true "React SSR with Next.js")
 
-You are usually completely running ReactJS on the browser. For sure, the simplest setting for your React application is client-side rendering.
-The initial html rendered by the server is a placeholder `<div id="root"></div>` and the entire UI is rendered in the browser once all your scripts load.
+Usually, we are completely running React.js on client-side: Javascript is interpreted by your browser.
+For this reason, client-side rendering is the simplest setting for your React application.
+The initial html rendered by the server is a placeholder `<div id="root"></div>`.
+Then the entire UI is rendered in the browser once all your scripts load.
 
 The problem is that, in the meantime, your visitor sees... nothing, a blank page!
 
@@ -26,7 +28,7 @@ Let's focus on the how rather than the why here.
 
 ### What's the plan?
 
-Facebook has created a node module [create-react-app](https://github.com/facebook/create-react-app) to generate a boilerplate version of a React application.
+Facebook has created a node module [create-react-app](https://github.com/facebook/create-react-app) to easily generate a React application.
 Many React applications are close to its settings. That's why I chose it as a code base for this article.
 
 This article is split in 3 short parts:
@@ -48,11 +50,11 @@ In that part, we will see how to implement SSR manually on an existing React app
 - `package.json` for dependencies
 - Webpack configuration included
 - `App.js` - loads React and renders the Hello component
-- `index.js` - putting all together into a root component
+- `index.js` - puts all together into a root component
 
 ### Checking rendering type
 
-I just added to the code base a simple function `isClientOrServer`:
+I just added to the code base a simple function `isClientOrServer` based on the availability of `window`:
 
 ```
 const isClientOrServer = () => {
@@ -60,7 +62,7 @@ const isClientOrServer = () => {
 };
 ```
 
-so that we display on the page what is rendering the application.
+so that we display on the page what is rendering the application: server or client.
 
 To test it by yourself:
 
@@ -70,7 +72,7 @@ To test it by yourself:
 - launch the dev server with `yarn start`
 - browse to http://localhost:3000 to view the app
 
-I am now simulating a 'good 3G network' in Chrome so that we really understand what is going on.
+I am now simulating a '3G network' in Chrome (could be a real life usage) so that we really understand what is going on.
 An here is the result:
 
 ![CSR](assets/cra-csr.gif?raw=true "Client-side rendering on a create-react-app")
@@ -78,17 +80,15 @@ An here is the result:
 ### Implementing SSR
 
 Let's remove that crappy flickering with server-side rendering!
-I won't through all the code but I will describe the main steps.
+I won't show all the code (check my repo to see it in details) but here are the main steps.
 
 We first need a server, add Express to our dependencies with `yarn add express`.
 
 Webpack only loads the src/ folder, we can thus create a new folder named server/ next to it.
-Inside, create a `index.js` file where we use express and a server renderer.
+Inside, create a file `index.js` where we use express and a server renderer.
 
 ```
-[...]
-
-// we use port 3001 here
+// use port 3001 because 3000 is used by our front
 const PORT = 3001;
 const path = require('path');
 
@@ -98,15 +98,11 @@ const router = express.Router();
 
 // root (/) should always serve our server rendered page
 router.use('^/$', serverRenderer);
-
-[...]
 ```
 
 To render our html, we use a server renderer that is replacing the root component with the built html:
 
 ```
-[...]
-
 // index.html file created by create-react-app build tool
 const filePath = path.resolve(__dirname, '..', '..', 'build', 'index.html');
 
@@ -127,14 +123,10 @@ fs.readFile(filePath, 'utf8', (err, htmlData) => {
 We finally need an entry point that will tell Node how to interpret our React JSX code. We achieve this with Babel.
 
 ```
-[...]
-
 require('babel-register')({
   ignore: [ /(node_modules)/ ],
   presets: ['es2015', 'react-app']
 });
-
-[...]
 ```
 
 To test it by yourself:
@@ -146,7 +138,7 @@ To test it by yourself:
 - launch your node server with `node server/bootstrap.js`
 - browse to http://localhost:3001 to view the app
 
-Still simulating the 'good 3G network' in Chrome, here is the result:
+Still simulating the '3G network' in Chrome, here is the result:
 
 ![SSR](assets/cra-ssr.gif?raw=true "Server-side rendering on a create-react-app")
 
@@ -157,9 +149,9 @@ We proved that we can do SSR, but what the heck with that React logo?
 
 ### We miss many features
 
-Our example is a proof of concept very limited. We would like to see more feature like:
+Our example is a good proof of concept but very limited. We would like to see more feature like:
 
-- import images in js files
+- import images in js files (logo problem)
 - several routes usage or route management (check [this article](https://medium.com/@benlu/ssr-with-create-react-app-v2-1b8b520681d9))
 - deal with the `</head>` and the metatags
 - code splitting (here is [an article](https://medium.com/bucharestjs/upgrading-a-create-react-app-project-to-a-ssr-code-splitting-setup-9da57df2040a
@@ -173,7 +165,7 @@ Still, if you're interested in it, I attached just above some great articles giv
 Seriously... Next.js can bring you all these features!
 
 
-## Next.js helps you building server rendered React.js Application
+## 2) Next.js helps you building server rendered React.js Application
 
 ![Easy Next](assets/cucumber.jpg?raw=true "Easy SSR with Next.js")
 
@@ -183,7 +175,7 @@ Next.js is a minimalistic framework for server-rendered React applications with:
 
 - a very simple page based routing
 - Webpack hot reloading
-- automatic transpilation (babel)
+- automatic transpilation (with babel)
 - deployment facilities
 - automatic code splitting (loads page faster)
 - built in css support
@@ -234,7 +226,8 @@ You're ready to go! You're already doing SSR.
 
 ### Use create-next-app
 
-You can stop using create-react-app, and start using [create-next-app](https://github.com/segmentio/create-next-app):
+You want to start a server-side rendered React app, you can now stop using create-react-app,
+and start using [create-next-app](https://github.com/segmentio/create-next-app):
 
 ```
 npm install -g create-next-app
@@ -246,14 +239,15 @@ npm run dev
 
 This is all you need to do to create a React app with server-side rendering thanks to Next.js.
 
-Check [NextGram project](https://github.com/now-examples/nextgram) to see an app that takes advantage of the routing capabilities.
+Better than a simple Hello World app, check this [Hacker News clone](https://github.com/now-examples/next-news) implementing Next.js.
+It is fully server-rendered, queries the data over Firebase and updates in realtime as new votes come in.
 
 
-## How to use the power of Next.js in my existing React.js application?
+## 3) How to use the power of Next.js in my existing React.js application?
 
 ![Trick](assets/tunnel.jpg?raw=true "Next.js in existing app")
 
-Well, now you know that if you start from scratch and you want to make a SSR React app, Next.js is the best choice.
+Well, now you know that if you start from scratch and you want to make a SSR React app, Next.js might be the best choice.
 But what if your React app is already 6 months old? How to migrate your app to Next.js?
 
 Exactly like how we started with Next.js from scratch, add the Next.js dependency with `yarn add next`.
