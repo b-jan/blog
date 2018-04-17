@@ -250,8 +250,40 @@ It is fully server-rendered, queries the data over Firebase and updates in realt
 Well, now you know that if you start from scratch and you want to make a SSR React app, Next.js might be the best choice.
 But what if your React app is already 6 months old? How to migrate your app to Next.js?
 
-Exactly like how we started with Next.js from scratch, add the Next.js dependency with `yarn add next`.
-Then replace the scripts in your `package.json`
+Let's take the famous [Todo MVC example](https://github.com/reactjs/redux/tree/master/examples/todomvc).
+I choose this one, because it is based on create-react-app generator, and Redux is implemented,
+so that we can explore the complete migration.
+
+When I introduced Next.js above, I listed all the cool features it is packed with.
+Brace yourself: We have to implement them all during this migration.
+
+Once again, I created a [dedicated repository](XXXXXXXXX) for the tutorial. Every step fits to the appropriate commit from the repo.
+If you meet any difficulties, checkout and get the working solution.
+
+### Setting the server
+
+Add the Next.js dependencies needed (Next.js, a Redux wrapper for Next.js and the Next.js routing solution) with:
+
+```
+``npm install next next-redux-wrapper next-routes
+```
+
+For server-side we will use a node server, create `server.js`:
+
+```
+const next = require('next')
+const routes = require('./src/routes')
+const app = next({dir: 'src', dev: false})
+const handler = routes.getRequestHandler(app)
+
+const {createServer} = require('http')
+
+app.prepare().then(() => {
+  createServer(handler).listen(8081)
+})
+```
+
+Now replace the scripts in your `package.json` to build and develop with Next.js through hot reloading.
 
 ```
   "scripts": {
@@ -262,12 +294,48 @@ Then replace the scripts in your `package.json`
   }
 ```
 
-We need a node HTTP server and we now use the Next.js library to build and develop our application.
 We can keep `react-scripts` to run our tests.
+
+Now run the app with `npm run dev`:
+
+![Pages error](assets/pages-error.png?raw=true "Next pages error")
+
+We miss the Next.js pages/ directory, mandatory to take advantage of the page based routing.
+
+### Migrating file structure
+
+In the src/ folder, add a:
+
+- pages/ folder
+- static/ folder
+
+Now run the app again with `npm run dev`:
+
+![404 page](assets/404.jpg?raw=true "Next starting error")
+
+And do not forget to add our classic file `index.js` testing client vs server-side rendering inside the pages/ directory.
+Now it is working exactly like when we were trying Next.js from scratch.
+
+![Next Hello World](assets/next.gif?raw=true "Next.js Hello World Result")
+
+We still need to experiment the page based routing with Redux.
+
+### Migrating the app
+
+Replace `pages/index.js` with the file `src/index.js` and adjust imported components paths.
+
+
+
+- Webpack hot reloading
+- automatic transpilation (with babel)
+- deployment facilities
+- automatic code splitting (loads page faster)
+- built in css support
+- simple integration with Redux using next-redux-wrapper.
+
 
 Run your Next.js dev server with `yarn dev` and see this beautiful error:
 
-![404 page](assets/404.jpg?raw=true "Next starting error")
 
 Let's say we have a React Redux application with such a structure:
 
