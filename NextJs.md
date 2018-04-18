@@ -3,13 +3,11 @@
 ![Next.js](assets/ssr-next.jpg?raw=true "React SSR with Next.js")
 
 Usually, we are completely running React.js on client-side: Javascript is interpreted by your browser.
-For this reason, client-side rendering is the simplest setting for your React application.
-The initial html rendered by the server is a placeholder `<div id="root"></div>`.
-Then the entire UI is rendered in the browser once all your scripts load.
+The initial html returned by the server contains a placeholder, e.g. `<div id="root"></div>`, and then, once all your scripts are loaded, the entire UI is rendered in the browser. We call that client-side rendering.
 
 The problem is that, in the meantime, your visitor sees... nothing, a blank page!
 
-Looking for how to get rid of this crappy blank page for a personal project, I discovered Next.js: the current best framework for making server-side rendering React applications.
+Looking for how to get rid of this crappy blank page for a personal project, I discovered Next.js: in my opinion the current best framework for making server-side rendering React applications.
 
 
 ### Why SSR (Server-Side Rendering)?
@@ -28,16 +26,15 @@ Let's focus on the how rather than the why here.
 
 ### What's the plan?
 
-Facebook has created a node module [create-react-app](https://github.com/facebook/create-react-app) to easily generate a React application.
-Many React applications are close to its settings. That's why I chose it as a code base for this article.
+For this article, I chose to start with a basic app created with [create-react-app](https://github.com/facebook/create-react-app). Your own React applications is probably using similar settings.
 
 This article is split in 3 short parts:
 
-- How to upgrade manually your React app to SSR
+- How to upgrade manually your React app to get SSR
 - How to start with Next.js from scratch
 - How to bring Next.js to your existing React app
 
-I won't go through all the steps, but I will bring your attention on the main points of interesting.
+I won't go through all the steps, but I will bring your attention on the main points.
 I also provide a repository for each of the 3 strategies.
 
 
@@ -66,29 +63,28 @@ so that we display on the page what is rendering the application: server or clie
 
 To test it by yourself:
 
-- clone [this repository](https://github.com/b-jan/manual-react-ssr) I made.
-- checkout the initial commit
-- install the dependencies with `yarn`
-- launch the dev server with `yarn start`
+- clone [this repository](https://github.com/b-jan/manual-react-ssr).
+- checkout the initial tag: `git checkout step-0`
+- install the dependencies with `npm install`
+- launch the dev server with `npm start`
 - browse to http://localhost:3000 to view the app
 
-I am now simulating a '3G network' in Chrome (could be a real life usage) so that we really understand what is going on.
-An here is the result:
+I am now simulating a '3G network' in Chrome so that we really understand what is going on:
 
 ![CSR](assets/cra-csr.gif?raw=true "Client-side rendering on a create-react-app")
 
 ### Implementing SSR
 
-Let's remove that crappy flickering with server-side rendering!
-I won't show all the code (check my repo to see it in details) but here are the main steps.
+Let's fix that crappy flickering with server-side rendering!
+I won't show all the code (check the repo to see it in details) but here are the main steps.
 
-We first need a server, add Express to our dependencies with `yarn add express`.
+We first need a node server using Express.
 
-Webpack only loads the src/ folder, we can thus create a new folder named server/ next to it.
+In our React app, Webpack only loads the src/ folder, we can thus create a new folder named server/ next to it.
 Inside, create a file `index.js` where we use express and a server renderer.
 
 ```
-// use port 3001 because 3000 is used by our front
+// use port 3001 because 3000 is used so serve our React app build
 const PORT = 3001;
 const path = require('path');
 
@@ -123,17 +119,18 @@ fs.readFile(filePath, 'utf8', (err, htmlData) => {
 We finally need an entry point that will tell Node how to interpret our React JSX code. We achieve this with Babel.
 
 ```
+// (Florian: "Which file ?")
 require('babel-register')({
   ignore: [ /(node_modules)/ ],
   presets: ['es2015', 'react-app']
 });
 ```
 
-To test it by yourself:
+Test it by yourself:
 
-- checkout last changes on master branch
-- install the dependencies with `yarn`
-- build the application with `yarn build`
+- checkout last tag: `git checkout step-1`
+- install the dependencies with `npm install`
+- build the application with `npm build`
 - declare babel environment in your terminal: `export BABEL_ENV=development`
 - launch your node server with `node server/bootstrap.js`
 - browse to http://localhost:3001 to view the app
@@ -153,7 +150,7 @@ Our example is a good proof of concept but very limited. We would like to see mo
 
 - import images in js files (logo problem)
 - several routes usage or route management (check [this article](https://medium.com/@benlu/ssr-with-create-react-app-v2-1b8b520681d9))
-- deal with the `</head>` and the metatags
+- deal with the `</head>` and the metatags. (Florian: "Can you explain why I need that?")
 - code splitting (here is [an article](https://medium.com/bucharestjs/upgrading-a-create-react-app-project-to-a-ssr-code-splitting-setup-9da57df2040a
 ) solving the problem)
 - manage the state of our app or use Redux (check this [great article](https://medium.com/@cereallarceny/server-side-rendering-with-create-react-app-fiber-react-router-v4-helmet-redux-and-thunk-275cb25ca972)
@@ -196,10 +193,10 @@ Then, add a script to your package.json like this:
   }
 ```
 
-Create a pages/ folder. Every .js file becomes a route that gets automatically processed and rendered.
+Create a pages/ folder. Every .js file inside becomes a route that gets automatically processed and rendered.
 Add a index.js file in that pages/ folder (with the execution of our `isClientOrServer` function):
 
-```
+``` (Florian: Tu veux pas créer un vrai composant react, pour ne pas surprendre tes lecteurs qui ne connaitraient pas cette syntaxe ?)
 const Index = ({ title = 'Hello from Next.js' }) => (
   <div>
     <h1>{title}</h1>
