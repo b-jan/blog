@@ -1,4 +1,8 @@
-# Next.js: Use Server-Side Rendering in your React App (Part 1 / 2)
+
+In a [previous post](), I talked about adding SSR to a barebones CRA app
+
+
+# Next.js: Use Server-Side Rendering in your React App 
 
 ![Next.js](assets/ssr-next.jpg?raw=true "React SSR with Next.js")
 
@@ -122,7 +126,7 @@ fs.readFile(filePath, 'utf8', (err, htmlData) => {
   }
 ```
 
-This is possible thanks to `ReactDOMServer.renderToString` which fully render the HTML markup of a page to a string.
+This is possible thanks to `ReactDOMServer.renderToString` which renders a React element to its initial HTML.
 
 We finally need an entry point that will tell Node how to interpret our React JSX code. We achieve this with Babel.
 
@@ -158,12 +162,10 @@ Our example is a good proof of concept but very limited. We would like to see mo
 - import images in js files (logo problem)
 - several routes usage or route management (check [this article](https://medium.com/@benlu/ssr-with-create-react-app-v2-1b8b520681d9))
 - deal with the `</head>` and the metatags (for SEO improvements)
-- code splitting (here is [an article](https://medium.com/bucharestjs/upgrading-a-create-react-app-project-to-a-ssr-code-splitting-setup-9da57df2040a) solving the problem)
+- code splitting (here is [an article](https://medium.com/bucharestjs/upgrading-a-create-react-app-project-to-a-ssr-code-splitting-setup-9da57df2040a
+) solving the problem)
 - manage the state of our app or use Redux (check this [great article](https://medium.com/@cereallarceny/server-side-rendering-with-create-react-app-fiber-react-router-v4-helmet-redux-and-thunk-275cb25ca972)
-
-and performance is bad on large pages:
-`ReactDOMServer.renderToString()` is a synchronous CPU bound call and can starve out incoming requests to the server.
-Walmart worked on [an optimization](https://github.com/walmartlabs/react-ssr-optimization) for their e-commerce website.
+)
 
 It is possible to make SSR work perfectly on top of create-react-app, we won't go through all the painful work in this article.
 Still, if you're interested in it, I attached just above some great articles giving detailed explanations.
@@ -250,16 +252,173 @@ Better than a simple Hello World app, check this [Hacker News clone](https://git
 It is fully server-rendered, queries the data over Firebase and updates in realtime as new votes come in.
 
 
+## 3) [WIP] How to use the power of Next.js in my existing React.js application?
+
+![Trick](assets/tunnel.jpg?raw=true "Next.js in existing app")
+
+Well, now you know that if you start from scratch and you want to make a SSR React app, Next.js might be the best choice.
+But what if your React app is already 6 months old? How to migrate your app to Next.js?
+
+Let's take the famous [Todo MVC example](https://github.com/reactjs/redux/tree/master/examples/todomvc).
+I choose this one, because it is based on create-react-app generator, and Redux is implemented,
+so that we can explore the complete migration.
+
+When I introduced Next.js above, I listed all the cool features it is packed with.
+Brace yourself: We have to implement them all during this migration.
+
+Once again, I created a [dedicated repository](XXXXXXXXX) for the tutorial. Every step fits to the appropriate commit from the repo.
+If you meet any difficulties, checkout and get the working solution.
+
+### Setting the server
+
+Add the Next.js dependencies needed (Next.js, a Redux wrapper for Next.js and the Next.js routing solution) with:
+
+```
+yarn add next next-redux-wrapper next-routes
+```
+
+For server-side we will use a node server, create `server.js`:
+
+```
+const next = require('next')
+const routes = require('./src/routes')
+const app = next({dir: 'src', dev: false})
+const handler = routes.getRequestHandler(app)
+
+const {createServer} = require('http')
+
+app.prepare().then(() => {
+  createServer(handler).listen(8081)
+})
+```
+
+Now replace the scripts in your `package.json` to build and develop with Next.js through hot reloading.
+
+```
+  "scripts": {
+    "dev": "next dev src",
+    "start": "node server.js",
+    "build": "next build src",
+    "test": "react-scripts test --env=jsdom"
+  }
+```
+
+We can keep `react-scripts` to run our tests.
+
+Now run the app with `npm run dev`:
+
+![Pages error](assets/pages-error.png?raw=true "Next pages error")
+
+We miss the Next.js pages/ directory, mandatory to take advantage of the page based routing.
+
+### Migrating file structure
+
+In the src/ folder, add a:
+
+- pages/ folder
+- static/ folder
+
+Now run the app again with `npm run dev`:
+
+![404 page](assets/404.jpg?raw=true "Next starting error")
+
+And do not forget to add our classic file `index.js` testing client vs server-side rendering inside the pages/ directory.
+Now it is working exactly like when we were trying Next.js from scratch.
+
+![Next Hello World](assets/next.gif?raw=true "Next.js Hello World Result")
+
+We still need to experiment the page based routing with Redux.
+
+### Migrating the app
+
+Replace `pages/index.js` with the file `src/index.js` and adjust imported components paths.
+
+
+In Next.js, you can use in your React components a lifecycle method bound to the server side rendering on first load.
+
+
+- Webpack hot reloading
+- automatic transpilation (with babel)
+- deployment facilities
+- automatic code splitting (loads page faster)
+- built in css support
+- simple integration with Redux using next-redux-wrapper.
+
+
+Run your Next.js dev server with `yarn dev` and see this beautiful error:
+
+
+Let's say we have a React Redux application with such a structure:
+
+```
+src/
+  actions/
+  assets/
+    css/
+    font/
+    img/
+    favicon.ico
+    index.html
+  components/
+    Header.component.js
+    Homepage.component.js
+    Footer.component.js
+  containers/
+    App.container.js
+    Header.container.js
+    Footer.container.js
+  reducers/
+  store/
+  translations/
+  index.js
+  routes.js
+package.json
+README.md
+yarn.lock
+```
+
+The strategy is to keep the same file structure we have in our client-side project and simply add a
+pages/ folder and a static/ folder (instead of assets/ folder in our case).
+
+About how to migrate, you can create a single Next.js page with your React Router components and then gradually
+migrate each route to a Next.js one and remove the React Router route.
+
+First make it work as a SPA, then progressively break up into pages.
+
+https://gist.github.com/jaredpalmer/a73bc00cac8926ff0ad5281879b1eb90
+
+
+
+
+
+
+
+## Improving again
+
+
+If you want to know more, visit : https://learnnextjs.com/basics/getting-started
+Vue.js has its own Next.js named Nuxt.js, visit : https://nuxtjs.org/guide
+Caching
+Better performance for end users, Better customer engagement
+
+
+
+### Do both
+
+Here, the initial render is on the server. Hence, the html received by the browser has the UI as it should be.
+Once the scripts are loaded, the virtual DOM is re-rendered once again to set up your components' event handlers.
+
+Over here, you need to make sure that you re-render the exact same virtual DOM (root ReactJS component) with
+the same props that you used to render on the server. Otherwise, ReactJS will complain that the server-side and
+client-side virtual DOMs don't match.
+
+
+### Pre-rendering
+
+https://medium.com/@dtinth/prerendering-a-create-react-app-app-6e8571d7d662
+
+### Caching
+
+
 ### Vue.js and Nuxt
 
-You're a Vue.js developer. Just after Next.js first release, two french brothers made the same for Vue.js: Nuxt was born!
-Like Vue, the [Nuxt documentation]((https://nuxtjs.org/)) is very clear and you can use the same starter template `vue-cli` for you app:
-
-```
-vue init nuxt-community/starter-template <project-name>
-```
-
-### What's Next?
-
-Hope you liked this article which was mainly written in order to introduce server-side rendering with Next.
-In the following, I am going to demonstrate how to migrate your existing create-react-app to Next.js.
